@@ -3,12 +3,12 @@ const grid = document.querySelector("#grid");
 const keyboardLetters = [
   ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
   ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
-  ["enter", "z", "x", "c", "v", "b", "n", "m", "delete"],
+  ["ent", "z", "x", "c", "v", "b", "n", "m", "del"],
 ];
 
 const listElements = [];
 let myAnswer = [];
-const secretWord = ["p", "l", "a", "t", "z", "i"];
+const secretWord = ["p", "l", "a", "n", "e", "t"];
 
 let positions = [];
 let attempts = 0;
@@ -30,15 +30,16 @@ grid.append(...rows);
 
 keyboardLetters.map((letters) => {
   const list = document.createElement("ul");
+  list.classList.add("row-item-key")
   letters.map((letter) => {
     const listItem = document.createElement("li");
     switch (letter) {
-      case "enter":
+      case "ent":
         listItem.innerHTML = `
           <button onclick="checkWord()" id=${letter}>${letter}</button>
         `;
         break;
-      case "delete":
+      case "del":
         listItem.innerHTML = `
           <button onclick="deleteLetter()" id=${letter}>${letter}</button>
         `;
@@ -57,9 +58,6 @@ keyboardLetters.map((letters) => {
 keyboard.append(...listElements);
 
 const checkWord = () => {
-  if (positions.every((position) => position === "green")) {
-    alert("Ya ganaste, salte de aqui por favor");
-  }
   if (attempts === 5) {
     alert("Hey ya no tienes intentos");
     return;
@@ -78,6 +76,11 @@ const checkWord = () => {
           positions.push("gray");
           break;
       }
+    }
+    
+    if (positions.every(position => position === "green")) {
+      
+      alert("Ya ganaste, salte de aqui por favor");
     }
     positions.map((color, id) => {
       const item = document.getElementById(`${attempts - 1}-${id}`);
